@@ -5,6 +5,7 @@ class Deck:
     
     def __init__(self):
         self.cardList = []
+        self.discardList = []
         self.colorList = ['red','blue','green']
         self.fillList = ['solid', 'shaded', 'clear']
         self.shapeList = ['circle', 'triangle','square']
@@ -22,6 +23,11 @@ class Deck:
     #takes in an integer (1-81) and returns the index at that card
     def getCard(self, CardNumber):
         return self.cardList[CardNumber]
+    
+    def removeCard(self,CardNumber):
+        card = self.cardList.pop(CardNumber)
+        self.cardList.insert(CardNumber,None)
+        self.discardList.append(card)
 
     #shuffle method with three shuffles
     def shuffle(self):

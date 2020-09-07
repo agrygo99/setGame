@@ -4,12 +4,12 @@ Created on Mon Aug 31 18:20:37 2020
 
 @author: ashle
 """
-import tkinter
-from tkinter import messagebox
-import Card
+#import tkinter
+#from tkinter import messagebox
+#import Card
 
-root= tkinter.Tk()
-root.withdraw()
+#root= tkinter.Tk()
+#root.withdraw()
 
 #takes an input of 3 cards and compares all of their qualities to determine if they form a set or not
 #i added pop up windows to say if it is a good set, or an error for nonvalid set
