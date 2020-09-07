@@ -4,11 +4,12 @@ Created on Mon Aug 31 18:20:37 2020
 
 @author: ashle
 """
-import tkinter
-from tkinter import messagebox
+#import tkinter
+#from tkinter import messagebox
+#import Card
 
-root= tkinter.Tk()
-root.withdraw()
+#root= tkinter.Tk()
+#root.withdraw()
 
 #takes an input of 3 cards and compares all of their qualities to determine if they form a set or not
 #i added pop up windows to say if it is a good set, or an error for nonvalid set
@@ -49,24 +50,3 @@ def isSet(card1, card2, card3):
         #makes an error pop up, not a set
         #messagebox.showerror("Error", "Not a valid set")
         return False
-        
-#lines 53 through 72 from Prof Szecsei Card.py file
-class Card:
-
-    def __init__(self, Color, Shape, Fill, Number):
-        self.color = Color
-        self.fill = Fill
-        self.shape = Shape
-        self.number = Number
-
-    #create the methods for getting the properties of the card
-    def getColor(self):
-        return self.color
-    def getFill(self):
-        return self.fill
-    def getShape(self):
-        return self.shape
-    def getNumber(self):
-        return self.number
-    def getAll(self):
-        return (self.color, self.fill,self.shape,self.number)
