@@ -193,6 +193,7 @@ def selectionManager(selectedCards,cardButtons,cardIndexList):
             selectedCards.clear()
             cardButtons.clear()
             cardIndexList.clear()
+            resetTimeSelected()
 
 def processButton(timeSelected,selectedCards,cardButton,cardIndex):
     if timeSelected == 1:

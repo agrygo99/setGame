@@ -4,11 +4,7 @@ Created on Mon Aug 31 18:20:37 2020
 
 @author: ashle
 """
-import tkinter
-from tkinter import messagebox
-
-root= tkinter.Tk()
-root.withdraw()
+import Card
 
 def matchColor(card1,card2,card3):
      #if colors match
@@ -108,6 +104,8 @@ def isSet(card1, card2, card3):
     #ALL DISJOINT
     elif (difColor(card1,card2,card3)==True and difFill(card1,card2,card3) and difShape(card1,card2,card3)==True and difNum(card1,card2,card3)==True):
         return True
+    elif card1 is None or card2 is None or card3 is None:
+        return False
     #not a set
     else:
         #makes an error pop up, not a set
@@ -115,22 +113,3 @@ def isSet(card1, card2, card3):
         return False
         
 #lines 53 through 72 from Prof Szecsei Card.py file
-class Card:
-
-    def __init__(self, Color, Shape, Fill, Number):
-        self.color = Color
-        self.fill = Fill
-        self.shape = Shape
-        self.number = Number
-
-    #create the methods for getting the properties of the card
-    def getColor(self):
-        return self.color
-    def getFill(self):
-        return self.fill
-    def getShape(self):
-        return self.shape
-    def getNumber(self):
-        return self.number
-    def getAll(self):
-        return (self.color, self.fill,self.shape,self.number)
