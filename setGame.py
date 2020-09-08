@@ -69,40 +69,52 @@ def difNum(card1,card2,card3):
         return True
     else:
         return False
-    
+
+setCount=0
+
 #takes an input of 3 cards and compares all of their qualities to determine if they form a set or not
 #i added pop up windows to say if it is a good set, or an error for nonvalid set
 def isSet(card1, card2, card3):
+    global setCount
     #3 MATCHES, 1 DISJOINT
     #color,fill,shape same; number different
     if ((matchColor(card1,card2,card3)==True) and (matchFill(card1,card2,card3)==True) and (matchShape(card1,card2,card3)==True) and (difNum(card1,card2,card3)==True)):
+        setCount=setCount+1
         return True
     #color,shape,number same; fill different
     elif (matchColor(card1,card2,card3)==True and matchShape(card1,card2,card3)==True and matchNum(card1,card2,card3)==True and difFill(card1,card2,card3)==True):
+        setCount=setCount+1
         return True
     #color,fill,number same; shape different
     elif (matchColor(card1,card2,card3)==True and matchFill(card1,card2,card3)==True and matchNum(card1,card2,card3)==True and difShape(card1,card2,card3)==True):
+        setCount=setCount+1
         return True
     #shape,fill,number same; color different
     elif (matchNum(card1,card2,card3)==True and matchFill(card1,card2,card3)==True and matchShape(card1,card2,card3)==True and difColor(card1,card2,card3)==True):
+        setCount=setCount+1
         return True
     
     #1 MATCH, 3 DISJOINT
     #color same; shape,fill,number different
     elif (matchColor(card1,card2,card3)==True and difShape(card1,card2,card3)==True and difFill(card1,card2,card3)==True and difNum(card1,card2,card3)==True):
+        setCount=setCount+1
         return True
     #shape same; color,fill,number different
     elif (matchShape(card1,card2,card3)==True and difColor(card1,card2,card3)==True and difFill(card1,card2,card3)==True and difNum(card1,card2,card3)==True):
+        setCount=setCount+1
         return True
     #fill same; color,shape,number different
     elif (matchFill(card1,card2,card3)==True and difShape(card1,card2,card3)==True and difColor(card1,card2,card3)==True and difNum(card1,card2,card3)==True):
+        setCount=setCount+1
         return True
     #number same; color,shape,fill different
     elif (matchNum(card1,card2,card3)==True and difShape(card1,card2,card3)==True and difFill(card1,card2,card3)==True and difColor(card1,card2,card3)==True):
+        setCount=setCount+1
         return True
     
     #ALL DISJOINT
-    elif (difColor(card1,card2,card3)==True and difFill(card1,card2,card3) and difShape(card1,card2,card3)==True and difNum(card1,card2,card3)==True):
+    elif (difColor(card1,card2,card3)==True and difFill(card1,card2,card3)==True and difShape(card1,card2,card3)==True and difNum(card1,card2,card3)==True):
+        setCount=setCount+1
         return True
     elif card1 is None or card2 is None or card3 is None:
         return False
@@ -111,5 +123,6 @@ def isSet(card1, card2, card3):
         #makes an error pop up, not a set
         #messagebox.showerror("Error", "Not a valid set")
         return False
-        
-#lines 53 through 72 from Prof Szecsei Card.py file
+
+def getCount():
+    return setCount

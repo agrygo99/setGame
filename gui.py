@@ -3,6 +3,7 @@ from PIL import ImageTk, Image
 from itertools import *
 import glob
 import random
+import sys
 import Deck
 import setGame
 Deck = Deck.Deck
@@ -169,8 +170,11 @@ def populateImage(cardButtons,cardIndexList,deckIndexList):
     allCardButtons[7]['image'] = keepImage8
     allCardButtons[8]['image'] = keepImage9
     cardButtons[0]["highlightbackground"] = '#FFFFFF'
+    cardButtons[0]["bg"] = '#FFFFFF'
     cardButtons[1]["highlightbackground"] = '#FFFFFF'
+    cardButtons[1]["bg"] = '#FFFFFF'
     cardButtons[2]["highlightbackground"] = '#FFFFFF'
+    cardButtons[2]["bg"] = '#FFFFFF'
     cardButtons.clear()
     cardIndexList.clear()
     deckIndexList.clear()
@@ -190,6 +194,7 @@ def selectionManager(selectedCards,cardButtons,cardIndexList):
             status["text"] = "Try Again"
             for cardButton in cardButtons:
                 cardButton["highlightbackground"] = '#FFFFFF'
+                cardButton["bg"] = '#FFFFFF'
             selectedCards.clear()
             cardButtons.clear()
             cardIndexList.clear()
@@ -198,6 +203,7 @@ def selectionManager(selectedCards,cardButtons,cardIndexList):
 def processButton(timeSelected,selectedCards,cardButton,cardIndex):
     if timeSelected == 1:
         cardButton["highlightbackground"] = '#000000'
+        cardButton["bg"] = '#000000'
         selectedCards.append(currentGrid[cardIndex])
         cardButtons.append(cardButton)
         cardIndexList.append(cardIndex)
@@ -206,6 +212,7 @@ def processButton(timeSelected,selectedCards,cardButton,cardIndex):
             return 0
     else:
         cardButton["highlightbackground"] = '#FFFFFF'
+        cardButton["bg"] = '#FFFFFF'
         selectedCards.remove(currentGrid[cardIndex])
         cardButtons.remove(cardButton)
         cardIndexList.remove(cardIndex)
@@ -331,6 +338,17 @@ def newGame():
 button_5 = Button(root, text="New Game", padx=10, pady=10, command=newGame)
 button_5.grid(row=6, column=1, columnspan=3)
 
+def quitGame():
+    sys.exit()
+
+button_6 = Button(root, text="Quit Game", padx=10, pady=10, command=quitGame)
+button_6.grid(row=6, column=2, columnspan=3)
+
+def checkNumSets():
+    status["text"]= int(setGame.getCount() / 2)
+
+button_7 = Button(root, text="Check # of Sets", padx=10,pady=10, command=checkNumSets)
+button_7.grid(row=6, column=3, columnspan=3)
 
 def hotSays():
     return
