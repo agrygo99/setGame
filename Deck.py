@@ -28,6 +28,9 @@ class Deck:
         card = self.cardList.pop(CardNumber)
         self.cardList.insert(CardNumber,None)
         self.discardList.append(card)
+    
+    def insertBackOfDeck(self, cardObject):
+        self.cardList.insert(-1, cardObject)
 
     #shuffle method with three shuffles
     def shuffle(self):

@@ -1,5 +1,6 @@
 from tkinter import *
 from PIL import ImageTk, Image
+from itertools import *
 import glob
 import random
 import Deck
@@ -29,6 +30,23 @@ card_9_selected = 0
 card_10_selected = 0
 card_11_selected = 0
 card_12_selected = 0
+
+def setOnGrid():
+    cardCombinations = list(combinations(currentGrid, 3))
+    print(cardCombinations)
+    for combination in cardCombinations:
+        flag = setGame.isSet(combination[0], combination[1], combination[2])
+        if flag:
+            return True
+    return False
+
+def draw():
+    status["text"] = "Redrawing"
+    cardBut = [card_1,card_2,card_3]
+    cardIdxList = [0,1,2]
+    deckIndexList = [deckIndex+1, deckIndex+2, deckIndex+3]
+    populateImage(cardBut, cardIdxList, deckIndexList)
+    
 
 def resetTimeSelected():
     global card_1_selected
@@ -71,9 +89,29 @@ def populateImage(cardButtons,cardIndexList,deckIndexList):
     global keepImage8
     global keepImage9
 
+    drewThree = False
 
+    if all(card is None for card in deck.cardList) and setOnGrid() == False:
+        status["text"] = "Game Over!"
+        disableButtons()
+        return
+    if all(card is None for card in deck.cardList):
+        currentGrid[cardIndexList[0]] = None
+        currentGrid[cardIndexList[1]] = None
+        currentGrid[cardIndexList[2]] = None
+        cardButtons[0]['image'] = None
+        cardButtons[1]['image'] = None
+        cardButtons[2]['image'] = None
+        cardButtons[0]['state'] = DISABLED
+        cardButtons[1]['state'] = DISABLED
+        cardButtons[2]['state'] = DISABLED
+        cardButtons.clear()
+        cardIndexList.clear()
+        deckIndexList.clear()
+        resetTimeSelected()
+        return
     allCardButtons = [card_1,card_2,card_3,card_4,card_5,card_6,card_7,card_8,card_9,card_10,card_11,card_12]
-    allCardIndex = [0,1,2,3,4,5,6,7,8,9,10,11,12]
+    allCardIndex = [0,1,2,3,4,5,6,7,8,9,10,11]
     for cardButton in cardButtons:
         allCardButtons.remove(cardButton)
     for cardIndex in cardIndexList:
@@ -82,11 +120,27 @@ def populateImage(cardButtons,cardIndexList,deckIndexList):
     currentGrid[cardIndexList[0]] = deck.getCard(deckIndexList[0])
     currentGrid[cardIndexList[1]] = deck.getCard(deckIndexList[1])
     currentGrid[cardIndexList[2]] = deck.getCard(deckIndexList[2])
+    tries = 0
+    while setOnGrid() is False:
+        tries += 1
+        draw()
+        deck.removeCard(deckIndexList[0])
+        deck.removeCard(deckIndexList[1])
+        deck.removeCard(deckIndexList[2])
+        deck.insertBackOfDeck(deckIndexList[0])
+        deck.insertBackOfDeck(deckIndexList[1])
+        deck.insertBackOfDeck(deckIndexList[2])
+        drewThree = True
+        if tries > 81:
+            status["text"] = "Game Over!"
+            disableButtons()
+
     print(str(cardIndexList))
     print(str(deckIndexList))
-    deck.removeCard(deckIndexList[0])
-    deck.removeCard(deckIndexList[1])
-    deck.removeCard(deckIndexList[2])
+    if not drewThree:
+        deck.removeCard(deckIndexList[0])
+        deck.removeCard(deckIndexList[1])
+        deck.removeCard(deckIndexList[2])
     popImage1 = ImageTk.PhotoImage(Image.open(currentGrid[cardIndexList[0]].image))
     popImage2 = ImageTk.PhotoImage(Image.open(currentGrid[cardIndexList[1]].image))
     popImage3 = ImageTk.PhotoImage(Image.open(currentGrid[cardIndexList[2]].image))
@@ -147,73 +201,77 @@ def processButton(timeSelected,selectedCards,cardButton,cardIndex):
         cardButtons.append(cardButton)
         cardIndexList.append(cardIndex)
         selectionManager(selectedCards,cardButtons,cardIndexList)
-        return 1
+        if len(selectedCards) == 0:
+            return 0
     else:
         cardButton["highlightbackground"] = '#FFFFFF'
+        selectedCards.remove(currentGrid[cardIndex])
+        cardButtons.remove(cardButton)
+        cardIndexList.remove(cardIndex)
         return 0
 def card_1_click():
     global card_1_selected
     card_1_selected += 1
     cardIndex = 0
-    card_1_selected = processButton(card_1_selected,selectedCards,card_1,cardIndex)
+    card_1_selected = 1 if processButton(card_1_selected,selectedCards,card_1,cardIndex) is None else 0
 
 def card_2_click():
     global card_2_selected
     card_2_selected += 1
     cardIndex = 1
-    card_2_selected = processButton(card_2_selected,selectedCards,card_2,cardIndex)
+    card_2_selected = 1 if processButton(card_2_selected,selectedCards,card_2,cardIndex) is None else 0
 
 
 def card_3_click():
     global card_3_selected
     card_3_selected += 1
     cardIndex = 2
-    card_3_selected = processButton(card_3_selected,selectedCards,card_3,cardIndex)
+    card_3_selected = 1 if processButton(card_3_selected,selectedCards,card_3,cardIndex) is None else 0
 def card_4_click():
     global card_4_selected
     card_4_selected += 1
     cardIndex = 3
-    card_4_selected = processButton(card_4_selected,selectedCards,card_4,cardIndex)
+    card_4_selected = 1 if processButton(card_4_selected,selectedCards,card_4,cardIndex) is None else 0
 def card_5_click():
     global card_5_selected
     card_5_selected += 1
     cardIndex = 4
-    card_5_selected = processButton(card_5_selected,selectedCards,card_5,cardIndex)
+    card_5_selected = 1 if processButton(card_5_selected,selectedCards,card_5,cardIndex) is None else 0
 def card_6_click():
     global card_6_selected
     card_6_selected += 1
     cardIndex = 5
-    card_6_selected = processButton(card_6_selected,selectedCards,card_6,cardIndex)
+    card_6_selected = 1 if processButton(card_6_selected,selectedCards,card_6,cardIndex) is None else 0
 def card_7_click():
     global card_7_selected
     card_7_selected += 1
     cardIndex = 6
-    card_7_selected = processButton(card_7_selected,selectedCards,card_7,cardIndex)
+    card_7_selected = 1 if processButton(card_7_selected,selectedCards,card_7,cardIndex) is None else 0
 def card_8_click():
     global card_8_selected
     card_8_selected += 1
     cardIndex = 7
-    card_8_selected = processButton(card_8_selected,selectedCards,card_8,cardIndex)
+    card_8_selected = 1 if processButton(card_8_selected,selectedCards,card_8,cardIndex) is None else 0
 def card_9_click():
     global card_9_selected
     card_9_selected += 1
     cardIndex = 8
-    card_9_selected = processButton(card_9_selected,selectedCards,card_9,cardIndex)
+    card_9_selected = 1 if processButton(card_9_selected,selectedCards,card_9,cardIndex) is None else 0
 def card_10_click():
     global card_10_selected
     card_10_selected += 1
     cardIndex = 9
-    card_10_selected = processButton(card_10_selected,selectedCards,card_10,cardIndex)
+    card_10_selected = 1 if processButton(card_10_selected,selectedCards,card_10,cardIndex) is None else 0
 def card_11_click():
     global card_11_selected
     card_11_selected += 1
     cardIndex = 10
-    card_11_selected = processButton(card_11_selected,selectedCards,card_11,cardIndex)
+    card_11_selected = 1 if processButton(card_11_selected,selectedCards,card_11,cardIndex) is None else 0
 def card_12_click():
     global card_12_selected
     card_12_selected += 1
     cardIndex = 11
-    card_12_selected = processButton(card_12_selected,selectedCards,card_12,cardIndex)
+    card_12_selected = 1 if processButton(card_12_selected,selectedCards,card_12,cardIndex) is None else 0
 
 def populateGrid():
     global image_1
@@ -256,6 +314,7 @@ def populateGrid():
     card_10["image"] = image_10
     card_11["image"] = image_11
     card_12["image"] = image_12
+    print(len(deck.cardList))
 # function defs
 def newGame():
     global deck
@@ -275,8 +334,10 @@ button_5.grid(row=6, column=1, columnspan=3)
 def hotSays():
     return
 
-def disableButton():
-    pass
+def disableButtons():
+    allCardButtons = [card_1,card_2,card_3,card_4,card_5,card_6,card_7,card_8,card_9,card_10,card_11,card_12]
+    for button in allCardButtons:
+        button["status"] = DISABLED
 
 #Buttons
 card_1 = Button(root, padx=10, pady=10, command=card_1_click)

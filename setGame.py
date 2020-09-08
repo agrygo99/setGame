@@ -13,7 +13,9 @@ Created on Mon Aug 31 18:20:37 2020
 
 #takes an input of 3 cards and compares all of their qualities to determine if they form a set or not
 #i added pop up windows to say if it is a good set, or an error for nonvalid set
-def isSet(card1, card2, card3):  
+def isSet(card1, card2, card3):
+    if card1 is None or card2 is None or card3 is None:
+        return False  
      #if colors match
     if (card1.getColor() == card2.getColor() and card2.getColor() == card3.getColor()):
         #messagebox.showinfo("Congrats!", "Good set!")
