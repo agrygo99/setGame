@@ -14,6 +14,7 @@ cardButtons = []
 cardIndexList = []
 deckIndex = 11
 deckIndexList = []
+timeSelectedList = []
 
 #card selected
 card_1_selected = 0
@@ -29,26 +30,97 @@ card_10_selected = 0
 card_11_selected = 0
 card_12_selected = 0
 
+def resetTimeSelected():
+    global card_1_selected
+    global card_2_selected
+    global card_3_selected
+    global card_4_selected
+    global card_5_selected
+    global card_6_selected
+    global card_7_selected
+    global card_8_selected
+    global card_9_selected
+    global card_10_selected
+    global card_11_selected
+    global card_12_selected
+
+    card_1_selected = 0
+    card_2_selected = 0
+    card_3_selected = 0
+    card_4_selected = 0
+    card_5_selected = 0
+    card_6_selected = 0
+    card_7_selected = 0
+    card_8_selected = 0
+    card_9_selected = 0
+    card_10_selected = 0
+    card_11_selected = 0
+    card_12_selected = 0
+
 def populateImage(cardButtons,cardIndexList,deckIndexList):
     global popImage1
     global popImage2
     global popImage3
+    global keepImage1
+    global keepImage2
+    global keepImage3
+    global keepImage4
+    global keepImage5
+    global keepImage6
+    global keepImage7
+    global keepImage8
+    global keepImage9
+
+
+    allCardButtons = [card_1,card_2,card_3,card_4,card_5,card_6,card_7,card_8,card_9,card_10,card_11,card_12]
+    allCardIndex = [0,1,2,3,4,5,6,7,8,9,10,11,12]
+    for cardButton in cardButtons:
+        allCardButtons.remove(cardButton)
+    for cardIndex in cardIndexList:
+        allCardIndex.remove(cardIndex)
 
     currentGrid[cardIndexList[0]] = deck.getCard(deckIndexList[0])
     currentGrid[cardIndexList[1]] = deck.getCard(deckIndexList[1])
     currentGrid[cardIndexList[2]] = deck.getCard(deckIndexList[2])
+    print(str(cardIndexList))
+    print(str(deckIndexList))
+    deck.removeCard(deckIndexList[0])
+    deck.removeCard(deckIndexList[1])
+    deck.removeCard(deckIndexList[2])
     popImage1 = ImageTk.PhotoImage(Image.open(currentGrid[cardIndexList[0]].image))
     popImage2 = ImageTk.PhotoImage(Image.open(currentGrid[cardIndexList[1]].image))
     popImage3 = ImageTk.PhotoImage(Image.open(currentGrid[cardIndexList[2]].image))
+    keepImage1 = ImageTk.PhotoImage(Image.open(currentGrid[allCardIndex[0]].image))
+    keepImage2 = ImageTk.PhotoImage(Image.open(currentGrid[allCardIndex[1]].image))
+    keepImage3 = ImageTk.PhotoImage(Image.open(currentGrid[allCardIndex[2]].image))
+    keepImage4 = ImageTk.PhotoImage(Image.open(currentGrid[allCardIndex[3]].image))
+    keepImage5 = ImageTk.PhotoImage(Image.open(currentGrid[allCardIndex[4]].image))
+    keepImage6 = ImageTk.PhotoImage(Image.open(currentGrid[allCardIndex[5]].image))
+    keepImage7 = ImageTk.PhotoImage(Image.open(currentGrid[allCardIndex[6]].image))
+    keepImage8 = ImageTk.PhotoImage(Image.open(currentGrid[allCardIndex[7]].image))
+    keepImage9 = ImageTk.PhotoImage(Image.open(currentGrid[allCardIndex[8]].image))
+    print(currentGrid[cardIndexList[0]].image)
+    print(currentGrid[cardIndexList[1]].image)
+    print(currentGrid[cardIndexList[2]].image)
     cardButtons[0]['image'] = popImage1
     cardButtons[1]['image'] = popImage2
     cardButtons[2]['image'] = popImage3
+    allCardButtons[0]['image'] = keepImage1
+    allCardButtons[1]['image'] = keepImage2
+    allCardButtons[2]['image'] = keepImage3
+    allCardButtons[3]['image'] = keepImage4
+    allCardButtons[4]['image'] = keepImage5
+    allCardButtons[5]['image'] = keepImage6
+    allCardButtons[6]['image'] = keepImage7
+    allCardButtons[7]['image'] = keepImage8
+    allCardButtons[8]['image'] = keepImage9
     cardButtons[0]["highlightbackground"] = '#FFFFFF'
     cardButtons[1]["highlightbackground"] = '#FFFFFF'
     cardButtons[2]["highlightbackground"] = '#FFFFFF'
     cardButtons.clear()
     cardIndexList.clear()
     deckIndexList.clear()
+    resetTimeSelected()
 def selectionManager(selectedCards,cardButtons,cardIndexList):
     global deckIndex
     if len(selectedCards) == 3:
@@ -58,16 +130,15 @@ def selectionManager(selectedCards,cardButtons,cardIndexList):
             for cardIndex in cardIndexList:
                 deckIndex += 1
                 deckIndexList.append(deckIndex)
-                deck.removeCard(cardIndex)
             selectedCards.clear()
             populateImage(cardButtons, cardIndexList,deckIndexList)
         else:
             status["text"] = "Try Again"
             for cardButton in cardButtons:
                 cardButton["highlightbackground"] = '#FFFFFF'
-                selectedCards.remove(currentGrid[cardIndex])
-                cardButtons.remove(cardButton)
-                cardIndexList.remove(cardIndex)
+            selectedCards.clear()
+            cardButtons.clear()
+            cardIndexList.clear()
 
 def processButton(timeSelected,selectedCards,cardButton,cardIndex):
     if timeSelected == 1:
@@ -79,69 +150,66 @@ def processButton(timeSelected,selectedCards,cardButton,cardIndex):
         return 1
     else:
         cardButton["highlightbackground"] = '#FFFFFF'
-        selectedCards.remove(currentGrid[cardIndex])
-        cardButtons.remove(cardButton)
-        cardIndexList.remove(cardIndex)
         return 0
-def card_1_click(selectedCards):
+def card_1_click():
     global card_1_selected
     card_1_selected += 1
     cardIndex = 0
     card_1_selected = processButton(card_1_selected,selectedCards,card_1,cardIndex)
 
-def card_2_click(selectedCards):
+def card_2_click():
     global card_2_selected
     card_2_selected += 1
     cardIndex = 1
     card_2_selected = processButton(card_2_selected,selectedCards,card_2,cardIndex)
 
 
-def card_3_click(selectedCards):
+def card_3_click():
     global card_3_selected
     card_3_selected += 1
     cardIndex = 2
     card_3_selected = processButton(card_3_selected,selectedCards,card_3,cardIndex)
-def card_4_click(selectedCards):
+def card_4_click():
     global card_4_selected
     card_4_selected += 1
     cardIndex = 3
     card_4_selected = processButton(card_4_selected,selectedCards,card_4,cardIndex)
-def card_5_click(selectedCards):
+def card_5_click():
     global card_5_selected
     card_5_selected += 1
     cardIndex = 4
     card_5_selected = processButton(card_5_selected,selectedCards,card_5,cardIndex)
-def card_6_click(selectedCards):
+def card_6_click():
     global card_6_selected
     card_6_selected += 1
     cardIndex = 5
     card_6_selected = processButton(card_6_selected,selectedCards,card_6,cardIndex)
-def card_7_click(selectedCards):
+def card_7_click():
     global card_7_selected
     card_7_selected += 1
     cardIndex = 6
     card_7_selected = processButton(card_7_selected,selectedCards,card_7,cardIndex)
-def card_8_click(selectedCards):
+def card_8_click():
     global card_8_selected
     card_8_selected += 1
     cardIndex = 7
     card_8_selected = processButton(card_8_selected,selectedCards,card_8,cardIndex)
-def card_9_click(selectedCards):
+def card_9_click():
     global card_9_selected
     card_9_selected += 1
     cardIndex = 8
     card_9_selected = processButton(card_9_selected,selectedCards,card_9,cardIndex)
-def card_10_click(selectedCards):
+def card_10_click():
     global card_10_selected
     card_10_selected += 1
     cardIndex = 9
     card_10_selected = processButton(card_10_selected,selectedCards,card_10,cardIndex)
-def card_11_click(selectedCards):
+def card_11_click():
     global card_11_selected
     card_11_selected += 1
     cardIndex = 10
     card_11_selected = processButton(card_11_selected,selectedCards,card_11,cardIndex)
-def card_12_click(selectedCards):
+def card_12_click():
     global card_12_selected
     card_12_selected += 1
     cardIndex = 11
@@ -160,11 +228,10 @@ def populateGrid():
     global image_10
     global image_11
     global image_12
-    global currentGrid
-
 
     for i in range(12):
         currentGrid.append(deck.getCard(i))
+        deck.removeCard(i)
     image_1 = ImageTk.PhotoImage(Image.open(currentGrid[0].image))
     image_2 = ImageTk.PhotoImage(Image.open(currentGrid[1].image))
     image_3 = ImageTk.PhotoImage(Image.open(currentGrid[2].image))
@@ -212,72 +279,72 @@ def disableButton():
     pass
 
 #Buttons
-card_1 = Button(root, padx=10, pady=10, command=lambda: card_1_click(selectedCards))
+card_1 = Button(root, padx=10, pady=10, command=card_1_click)
 card_2 = Button(
     root,
     padx=10,
     pady=10,
-    command=lambda: card_2_click(selectedCards)
+    command=card_2_click
 )
 card_3 = Button(
     root,
     padx=10,
     pady=10,
-    command=lambda: card_3_click(selectedCards)
+    command=card_3_click
 )
 card_4 = Button(
     root,
     padx=10,
     pady=10,
-    command =lambda: card_4_click(selectedCards)
+    command =card_4_click
 )
 card_5 = Button(
     root,
     padx=10,
     pady=10,
-    command=lambda: card_5_click(selectedCards)
+    command=card_5_click
 )
 card_6 = Button(
     root,
     padx=10,
     pady=10,
-    command=lambda: card_6_click(selectedCards)
+    command=card_6_click
 )
 card_7 = Button(
     root,
     padx=10,
     pady=10,
-    command=lambda: card_7_click(selectedCards)
+    command=card_7_click
 )
 card_8 = Button(
     root,
     padx=10,
     pady=10,
-    command=lambda: card_8_click(selectedCards)
+    command=card_8_click
 )
 card_9 = Button(
     root,
     padx=10,
     pady=10,
-    command=lambda: card_9_click(selectedCards)
+    command=card_9_click
 )
 card_10 = Button(
     root,
     padx=10,
     pady=10,
-    command=lambda: card_10_click(selectedCards)
+    command=card_10_click
 )
 card_11 = Button(
     root,
     padx=10,
     pady=10,
-    command=lambda: card_11_click(selectedCards)
+    command=card_11_click
 )
 card_12 = Button(
     root,
     padx=10,
     pady=10,
-    command=lambda: card_12_click(selectedCards)
+    command=card_12_click
 )
 
 #Labels
