@@ -34,7 +34,7 @@ card_12_selected = 0
 
 def setOnGrid():
     cardCombinations = list(combinations(currentGrid, 3))
-    print(cardCombinations)
+    # print(cardCombinations)
     for combination in cardCombinations:
         flag = setGame.isSet(combination[0], combination[1], combination[2])
         if flag:
@@ -136,8 +136,8 @@ def populateImage(cardButtons,cardIndexList,deckIndexList):
             status["text"] = "Game Over!"
             disableButtons()
 
-    print(str(cardIndexList))
-    print(str(deckIndexList))
+    #print(str(cardIndexList))
+    #print(str(deckIndexList))
     if not drewThree:
         deck.removeCard(deckIndexList[0])
         deck.removeCard(deckIndexList[1])
@@ -154,9 +154,9 @@ def populateImage(cardButtons,cardIndexList,deckIndexList):
     keepImage7 = ImageTk.PhotoImage(Image.open(currentGrid[allCardIndex[6]].image))
     keepImage8 = ImageTk.PhotoImage(Image.open(currentGrid[allCardIndex[7]].image))
     keepImage9 = ImageTk.PhotoImage(Image.open(currentGrid[allCardIndex[8]].image))
-    print(currentGrid[cardIndexList[0]].image)
-    print(currentGrid[cardIndexList[1]].image)
-    print(currentGrid[cardIndexList[2]].image)
+    #print(currentGrid[cardIndexList[0]].image)
+    #print(currentGrid[cardIndexList[1]].image)
+    #print(currentGrid[cardIndexList[2]].image)
     cardButtons[0]['image'] = popImage1
     cardButtons[1]['image'] = popImage2
     cardButtons[2]['image'] = popImage3
@@ -322,7 +322,7 @@ def populateGrid():
     card_10["image"] = image_10
     card_11["image"] = image_11
     card_12["image"] = image_12
-    print(len(deck.cardList))
+    #print(len(deck.cardList))
 # function defs
 def newGame():
     global deck
